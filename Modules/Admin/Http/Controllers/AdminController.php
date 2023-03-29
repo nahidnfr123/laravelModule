@@ -16,12 +16,15 @@ class AdminController extends Controller
      */
     public function index()
     {
+        set_time_limit(0);
 
 //        $downLines = DownLine::with('referred'. 'referred')->get();
 //        $downLines = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
+
+        // Package Link: https://github.com/staudenmeir/laravel-adjacency-list
         $affiliates = Affiliate::tree()->get()->toTree();
 
-        return response()->json($affiliates);
+//        return response()->json($affiliates);
 //        $affiliates = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
 //        $allAffiliates = Affiliate::pluck('name', 'id')->all();
         return view('admin::index', compact('affiliates'));

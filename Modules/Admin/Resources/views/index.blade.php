@@ -19,8 +19,8 @@
                                     <div class="overflow-hidden">
                                         <ul id="tree1">
                                             @foreach($affiliates as $affiliate)
-                                                <li>
-                                                    {{ $affiliate->name }}
+                                                <li class="ml-6 p-1 border-l border-l-gray-400 border-b border-b-gray-300">
+                                                    <strong><span class="mr-2">{{ $affiliate->id }}.</span>{{ $affiliate->name }}</strong>
                                                     @if(count($affiliate['children']))
                                                         @include('admin::components.manageChild',['childs' => $affiliate['children']])
                                                     @endif
@@ -36,5 +36,4 @@
             </div>
         </div>
     </div>
-
 @endsection
