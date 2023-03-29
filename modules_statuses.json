@@ -3,5 +3,6 @@
     "Admin": true,
     "Affiliate": true,
     "Transaction": true,
-    "Roles": true
+    "Roles": true,
+    "Access": true
 }

@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/profile', 'update')->name('profile.update');
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
+
 });
 
 require __DIR__ . '/auth.php';

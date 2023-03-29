@@ -22,18 +22,21 @@ class PermissionTableSeeder extends Seeder
         $roles = ['admin', 'affiliate', 'user'];
 
         foreach ($roles as $role) {
-            Role::firstOrCreate(['name' => $role]);
+            Role::firstOrCreate([
+                'name' => $role,
+                'guard_name' => $role == 'user' ? 'web' : $role,
+            ]);
         }
 
         foreach ($permissionGroups as $key => $permissionGroup) {
             foreach ($permissionGroup as $permission) {
                 Permission::updateOrCreate([
                     'name' => gettype($permission) == 'string' ? $permission : $permission[0],
-                    'guard_name' => $key
+                    'guard_name' => 'web',
                 ], [
                     'name' => gettype($permission) == 'string' ? $permission : $permission[0],
 //                    'type' => $key,
-                    'guard_name' => $key,
+                    'guard_name' => 'web',
 //                    'special' => gettype($permission) == 'array' ? $permission[1] : 0
                 ]);
             }

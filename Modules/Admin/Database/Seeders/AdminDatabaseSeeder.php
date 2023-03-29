@@ -20,7 +20,7 @@ class AdminDatabaseSeeder extends Seeder
         $admin = Admin::firstOrCreate([
             'name' => 'admin',
             'email' => 'admin@admin.com'],
-            ['password' => bcrypt('admin')]
+            ['password' => bcrypt('admin@admin.com')]
         );
 
         $admin->assignRole('admin');
