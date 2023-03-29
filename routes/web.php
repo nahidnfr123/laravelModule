@@ -8,17 +8,16 @@ Route::get('/', function () {
 });
 
 
-Route::middleware(['auth:web,admin,affiliate',])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth:web'])->name('dashboard');
 
+Route::middleware(['auth:web,admin,affiliate',])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
         Route::put('/profile', 'update')->name('profile.update');
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
-
 });
 
 require __DIR__ . '/auth.php';
