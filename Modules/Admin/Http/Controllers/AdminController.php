@@ -5,6 +5,8 @@ namespace Modules\Admin\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Affiliate\Entities\Affiliate;
+use Modules\Affiliate\Entities\DownLine;
 
 class AdminController extends Controller
 {
@@ -14,7 +16,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin::index');
+
+//        $downLines = DownLine::with('referred'. 'referred')->get();
+//        $downLines = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
+        $affiliates = Affiliate::tree()->get()->toTree();
+
+        return response()->json($affiliates);
+//        $affiliates = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
+//        $allAffiliates = Affiliate::pluck('name', 'id')->all();
+        return view('admin::index', compact('affiliates'));
     }
 
     /**

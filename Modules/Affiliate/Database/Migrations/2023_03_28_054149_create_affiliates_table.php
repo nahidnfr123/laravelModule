@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -20,6 +19,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('promo_code')->nullable();
+            $table->string('commission')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

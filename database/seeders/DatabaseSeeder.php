@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Access\Database\Seeders\AccessDatabaseSeeder;
+use Modules\Admin\Database\Seeders\AdminDatabaseSeeder;
+use Modules\Affiliate\Database\Seeders\AffiliateDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
+            AccessDatabaseSeeder::class,
+            AdminDatabaseSeeder::class,
+            AffiliateDatabaseSeeder::class,
+
 //            PermissionTableSeeder::class
         ]);
         // \App\Models\User::factory()->create([
