@@ -1,0 +1,19 @@
+{
+    "admin": [
+        "view dashboard",
+        "view affiliate user",
+        "create affiliate user",
+        "edit affiliate user",
+        "delete affiliate user",
+        "view transaction",
+        "create transaction",
+        "edit transaction",
+        "delete transaction"
+    ],
+    "web": [
+        "view transaction",
+        "create transaction",
+        "edit transaction",
+        "delete transaction"
+    ]
+}
