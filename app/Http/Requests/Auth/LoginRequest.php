@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +24,7 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
@@ -36,25 +37,23 @@ class LoginRequest extends FormRequest
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-
-        $user_type = 'web';
+        // set default guard to web ...
+        $guard = 'web';
+        // ... but if the request is coming from the admin prefix, set the guard to admin
         if (Request()->route()->getPrefix() == '/admin') {
-            $user_type = 'admin';
-        } else if (Request()->route()->getPrefix() == '/affiliate') {
-            $user_type = 'affiliate';
+            $guard = 'admin';
+        } // ... but if the request is coming from the affiliate prefix, set the guard to affiliate
+        else if (Request()->route()->getPrefix() == '/affiliate') {
+            $guard = 'affiliate';
         }
-
-        Log::info($user_type);
-
-        if (!Auth::guard($user_type)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-//            Log::info('Login failed');
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
@@ -66,7 +65,7 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {

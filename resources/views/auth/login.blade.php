@@ -2,7 +2,20 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')"/>
 
-    <form method="POST" action="{{ route('login') }}">
+    <!--- Set the User Login Post request route --->
+    @if (Request()->route()->getPrefix() == '/admin')
+        <h1 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">Admin Login</h1>
+        @php $route = route('admin.login') @endphp
+    @elseif(Request()->route()->getPrefix() == '/affiliate')
+        <h1 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">Affiliate Login</h1>
+        @php $route = route('affiliate.login') @endphp
+    @else
+        <h1 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">User Login</h1>
+        @php $route = route('login') @endphp
+    @endif
+
+
+    <form method="POST" action="{{ $route }}">
         @csrf
 
         <!-- Email Address -->
