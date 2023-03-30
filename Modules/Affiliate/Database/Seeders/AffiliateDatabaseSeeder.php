@@ -27,6 +27,8 @@ class AffiliateDatabaseSeeder extends Seeder
         ]);
         $aff->assignRole('affiliate');
 
+        $count = 0;
+
         $affiliateIds = [];
         for ($x = 0; $x <= 4; $x++) {
             $affiliate1 = Affiliate::create([
@@ -39,50 +41,61 @@ class AffiliateDatabaseSeeder extends Seeder
             ]);
             $affiliate1->assignRole('affiliate');
             $affiliateIds[] = $affiliate1->id;
-        }
-        foreach ($affiliateIds as $affiliateId) {
-            for ($x = count($affiliateIds) + 1; $x <= count($affiliateIds) + 4; $x++) {
-                $affiliate2 = Affiliate::create([
-                    'name' => 'Affiliate',
-                    'email' => 'affiliate' . rand(100, 699) . $x . time() . '@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'promo_code' => $x,
-                    'parent_id' => $affiliateId,
-                    'commission' => '20', // in percentage
-                ]);
-                $affiliate2->assignRole('affiliate');
-                $affiliate2Ids[] = $affiliate2->id;
+
+            $lastId = $affiliate1->id;
+            for ($x = 0; $x <= 10000; $x++) {
+                $count++;
+                $lastId = $this->createAffiliates($lastId, $count);
             }
         }
 
-        foreach ($affiliate2Ids as $affiliateId) {
-            for ($x = count($affiliateIds) + 1; $x <= count($affiliateIds) + 4; $x++) {
-                $affiliate3 = Affiliate::create([
-                    'name' => 'Affiliate',
-                    'email' => 'affiliate' . rand(700, 1200) . $x . time() . '@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'promo_code' => $x,
-                    'parent_id' => $affiliateId,
-                    'commission' => '20', // in percentage
-                ]);
-                $affiliate3->assignRole('affiliate');
-                $affiliate3Ids[] = $affiliate3->id;
-            }
-        }
 
-        foreach ($affiliate3Ids as $affiliateId) {
-            for ($x = count($affiliateIds) + 1; $x <= count($affiliateIds) + 4; $x++) {
-                $affiliate4 = Affiliate::create([
-                    'name' => 'Affiliate',
-                    'email' => 'affiliate' . rand(1201, 1600) . uniqid() . time() . '@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'promo_code' => $x,
-                    'parent_id' => $affiliateId,
-                    'commission' => '20', // in percentage
-                ]);
-                $affiliate4->assignRole('affiliate');
-            }
-        }
+//        foreach ($affiliateIds as $affiliateId) {
+//            for ($x = count($affiliateIds) + 1; $x <= count($affiliateIds) + 4; $x++) {
+//                $affiliate2 = Affiliate::create([
+//                    'name' => 'Affiliate',
+//                    'email' => 'affiliate' . rand(100, 699) . $x . time() . '@gmail.com',
+//                    'password' => Hash::make('12345678'),
+//                    'promo_code' => $x,
+//                    'parent_id' => $affiliateId,
+//                    'commission' => '20', // in percentage
+//                ]);
+//                $affiliate2->assignRole('affiliate');
+//                $affiliate2Ids[] = $affiliate2->id;
+//            }
+//        }
+//
+//        foreach ($affiliate2Ids as $affiliateId) {
+//            for ($x = count($affiliateIds) + 1; $x <= count($affiliateIds) + 4; $x++) {
+//                $affiliate3 = Affiliate::create([
+//                    'name' => 'Affiliate',
+//                    'email' => 'affiliate' . rand(700, 1200) . $x . time() . '@gmail.com',
+//                    'password' => Hash::make('12345678'),
+//                    'promo_code' => $x,
+//                    'parent_id' => $affiliateId,
+//                    'commission' => '20', // in percentage
+//                ]);
+//                $affiliate3->assignRole('affiliate');
+//                $affiliate3Ids[] = $affiliate3->id;
+//            }
+//        }
+//
+//        foreach ($affiliate3Ids as $affiliateId) {
+//            for ($x = count($affiliateIds) + 1; $x <= count($affiliateIds) + 4; $x++) {
+//                $affiliate4 = Affiliate::create([
+//                    'name' => 'Affiliate',
+//                    'email' => 'affiliate' . rand(1201, 1600) . uniqid() . time() . '@gmail.com',
+//                    'password' => Hash::make('12345678'),
+//                    'promo_code' => $x,
+//                    'parent_id' => $affiliateId,
+//                    'commission' => '20', // in percentage
+//                ]);
+//                $affiliate4->assignRole('affiliate');
+//            }
+//        }
+
+
+        /// Junk Code
 //        for ($x = 0; $x <= 100; $x++) {
 //            DownLine::create([
 //                'referring_id' => rand(1, 100),
@@ -99,5 +112,20 @@ class AffiliateDatabaseSeeder extends Seeder
 //        ]);
 
         // $this->call("OthersTableSeeder");
+    }
+
+    public function createAffiliates($affiliateId, $count)
+    {
+        $affiliate = Affiliate::create([
+            'name' => 'Affiliate-',
+            'email' => 'affiliate' . $count . time() . '@gmail.com',
+            'password' => Hash::make('12345678'),
+            'promo_code' => $affiliateId + $count,
+            'parent_id' => $affiliateId,
+            'commission' => '20', // in percentage
+        ]);
+        $affiliate->assignRole('affiliate');
+
+        return $affiliate->id;
     }
 }

@@ -20,7 +20,13 @@
                                         <ul id="tree1">
                                             @foreach($affiliates as $affiliate)
                                                 <li class="ml-6 p-1 border-l border-l-gray-400 border-b border-b-gray-300">
-                                                    <strong><span class="mr-2">{{ $affiliate->id }}.</span>{{ $affiliate->name }}</strong>
+                                                    <div class="flex justify-between">
+                                                        <strong><span>{{ $affiliate->id }}.</span>{{ $affiliate->name }}</strong>
+                                                        <div>
+                                                            <span>(<strong>Level:</strong> {{$affiliate->depth}})</span>
+                                                            <span>(<strong>Path:</strong> {{$affiliate->path}})</span>
+                                                        </div>
+                                                    </div>
                                                     @if(count($affiliate['children']))
                                                         @include('admin::components.manageChild',['childs' => $affiliate['children']])
                                                     @endif

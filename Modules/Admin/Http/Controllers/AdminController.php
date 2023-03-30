@@ -22,8 +22,8 @@ class AdminController extends Controller
 //        $downLines = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
 
         // Package Link: https://github.com/staudenmeir/laravel-adjacency-list
-//        $affiliates = Affiliate::tree()->get()->toTree();
-        $affiliates = Affiliate::tree()->breadthFirst()->get();
+        $affiliates = Affiliate::tree()->get()->toTree();
+//        $affiliates = Affiliate::tree()->breadthFirst()->get();
 
         return response()->json($affiliates);
 //        $affiliates = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
