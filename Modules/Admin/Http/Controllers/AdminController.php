@@ -25,7 +25,7 @@ class AdminController extends Controller
         $affiliates = Affiliate::tree()->get()->toTree();
 //        $affiliates = Affiliate::tree()->breadthFirst()->get();
 
-        return response()->json($affiliates);
+//        return response()->json($affiliates);
 //        $affiliates = Affiliate::whereNull('parent_id')->with('children', 'children.children')->get();
 //        $allAffiliates = Affiliate::pluck('name', 'id')->all();
         return view('admin::index', compact('affiliates'));
